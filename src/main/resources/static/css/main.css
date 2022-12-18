@@ -49,8 +49,12 @@ body {
 }
 
 .warning {
-    color: #BC412E;
+    color: red;
     font-weight: bold;
+}
+
+.haserror {
+    outline:solid 1px red;
 }
 
 .company-name {
