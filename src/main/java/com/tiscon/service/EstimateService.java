@@ -7,6 +7,9 @@ import com.tiscon.domain.Customer;
 import com.tiscon.domain.CustomerOptionService;
 import com.tiscon.domain.CustomerPackage;
 import com.tiscon.dto.UserOrderDto;
+
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,9 +76,18 @@ public class EstimateService {
         double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
         // 小数点以下を切り捨てる
         int distanceInt = (int) Math.floor(distance);
+        double priceForDistance;
+        double n;
+        String str = dto.getdate();
+        String month = str.substring(5, 7);
+        System.out.println(result);
 
+        if (distanceInt == 0){
+            priceForDistance = 10000;
+        }else{
         // 距離当たりの料金を算出する
-        int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+        priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+        }
 
         int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
                 + getBoxForPackage(dto.getBed(), PackageType.BED)
@@ -91,8 +103,16 @@ public class EstimateService {
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
-
-        return priceForDistance + pricePerTruck + priceForOptionalService;
+        // 季節係数
+        if(month == 3 || month == 4){
+            n = 1.5; 
+        } else if(month == 9) {
+            n = 1.2;
+        }else{
+            n = 1.0;
+        }
+        int priceforseason = (int)((priceForDistance + pricePerTruck)*n);
+        return  priceforseason + priceForOptionalService;
     }
 
     /**

@@ -36,6 +36,9 @@ public class UserOrderForm {
     @NotBlank
     private String newAddress;
 
+    @NotBlank
+    private String date;
+
     @Numeric
     @NotBlank
     private String box;
@@ -109,6 +112,10 @@ public class UserOrderForm {
 
     public void setNewAddress(String newAddress) {
         this.newAddress = newAddress;
+    }
+
+    public String getdate() {
+        return date;
     }
 
     public String getBox() {
