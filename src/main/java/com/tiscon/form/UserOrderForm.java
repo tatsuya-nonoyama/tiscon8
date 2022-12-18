@@ -36,9 +36,6 @@ public class UserOrderForm {
     @NotBlank
     private String newAddress;
 
-    @NotBlank
-    private String date;
-
     @Numeric
     @NotBlank
     private String box;
@@ -114,9 +111,6 @@ public class UserOrderForm {
         this.newAddress = newAddress;
     }
 
-    public String getdate() {
-        return date;
-    }
 
     public String getBox() {
         return box;

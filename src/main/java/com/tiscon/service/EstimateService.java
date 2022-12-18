@@ -77,10 +77,6 @@ public class EstimateService {
         // 小数点以下を切り捨てる
         int distanceInt = (int) Math.floor(distance);
         double priceForDistance;
-        double n;
-        String str = dto.getdate();
-        String month = str.substring(5, 7);
-        System.out.println(result);
 
         if (distanceInt == 0){
             priceForDistance = 10000;
@@ -103,15 +99,8 @@ public class EstimateService {
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
-        // 季節係数
-        if(month == 3 || month == 4){
-            n = 1.5; 
-        } else if(month == 9) {
-            n = 1.2;
-        }else{
-            n = 1.0;
-        }
-        int priceforseason = (int)((priceForDistance + pricePerTruck)*n);
+        
+        int priceforseason = (int)((priceForDistance + pricePerTruck));
         return  priceforseason + priceForOptionalService;
     }
 

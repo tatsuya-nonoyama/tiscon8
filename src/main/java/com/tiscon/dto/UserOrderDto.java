@@ -16,8 +16,6 @@ public class UserOrderDto {
 
     private String newAddress;
 
-    private String date;
-
     private String box;
 
     private String bed;
@@ -84,9 +82,6 @@ public class UserOrderDto {
         this.newAddress = newAddress;
     }
 
-    public String getdate() {
-        return date;
-    }
 
     public int getBox() {
         return Integer.parseInt(box);
